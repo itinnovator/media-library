@@ -185,6 +185,7 @@ $(document).ready(function() {
     });
   }
 
+  mediaPagination();
 });
 
 upload('#media-uploader', URL + '/media');
@@ -273,3 +274,16 @@ upload('#media-uploader', URL + '/media');
       });
     });
   }
+
+function mediaPagination()
+{
+    $(document).on('click', '.media-link .pagination a', function (event) {
+      event.preventDefault();
+      event.stopImmediatePropagation()
+      link = $(this).attr('href');
+      $('#media_page').val($(this).text());
+      $.get(link, {pagination: true}, '', 'json').always(function (data) {
+        $('#media-library').html(data.message);
+      });
+    });
+}
